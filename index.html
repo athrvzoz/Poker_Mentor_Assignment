@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+        body {
+            display: grid;
+            grid-row: inherit;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            /* background-color: rgba(36, 15, 228, 0.8); */
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .header-title-container {
+            font-size: large;
+            color: rgb(0, 0, 0);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            animation: pulsate 2s infinite;
+        }
+
+        .header-round-info-container {
+            display: flex;
+            justify-content: space-evenly;
+
+        }
+
+        .header-img {
+            height: 75px;
+            border-radius: 5px;
+            border: 1px solid rgb(255, 255, 255);
+            padding: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transform: rotate(-3deg);
+        }
+
+        .header-status-info-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .header-button-container,
+        .header-score-container,
+        .header-round-container,
+        .header-img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #playGame {
+            appearance: none;
+            background-color: transparent;
+            border: 2px solid #1A1A1A;
+            border-radius: 15px;
+            box-sizing: border-box;
+            color: #3B3B3B;
+            cursor: pointer;
+            /* display: none; */
+            font-family: var(--primary-font);
+            font-size: 16px;
+            font-weight: 600;
+            line-height: normal;
+            margin: 0;
+            min-height: 60px;
+            min-width: 0;
+            outline: none;
+            padding: 16px 24px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: 100%;
+            will-change: transform;
+            animation: game-play-button-fade-in 2s infinite;
+        }
+
+
+        @keyframes game-play-button-fade-in {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+                box-shadow: 0 4px 8px 0;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulsate {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                /* transform: scale(1.2); */
+                opacity: 1;
+                /* box-shadow: 0 4px 8px 0; */
+            }
+
+            100% {
+                /* transform: scale(1); */
+                opacity: 0.5;
+            }
+        }
+
+        main {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 70px;
+            width: 100%;
+            height: 180px;
+        }
+
+
+
+        .cards {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 5px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid black;
+        }
+
+        .card {
+            position: relative;
+            padding: 3px;
+            width: 100px; /* Adjust card width as needed */
+            height: 150px; /* Adjust card height as needed */
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card-inner.flip {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card-front img,
+        .card-back img {
+            width: 100%; /* Make the image fit the card width */
+            height: 100%; /* Make the image fit the card height */
+            object-fit: cover; /* Ensure the image scales properly without distortion */
+        }
+
+        .card-front {
+            transform: rotateY(180deg);
+        }
+
+        canvas{
+            display: block;
+            margin: 0 auto; /* Center horizontally */
+            position: relative;
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust for vertical centering */
+            border: 1px solid #000;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-title-container">
+            <h1>POKER</h1>
+        </div>
+        <div class="header-round-info-container">
+            <div class="header-img-container">
+                <img src="./images/AceSpades.png" alt="aaaa" class="header-img">
+            </div>
+            <div class="header-score-container">
+                <h2 class="score">Score&nbsp;<span class="badge">0</span></h2>
+            </div>
+            <div class="header-round-container">
+                <h2 class="round">Round&nbsp;<span class="badge">0</span></h2>
+            </div>
+        </div>
+        <div class="header-status-info-container">
+            <p class="current-status">
+                Click 'Play Game' button to play game
+            </p>
+        </div>
+        <div class="header-button-container">
+            <div class="game-play-button-container">
+                <button id="playGame" class="play-game">Play Game</button>
+            </div>
+        </div>
+    </header>
+    <!-- <main>
+        <div class="card-container">
+            <div class="cards">
+                <div class="posA">
+                    <div class="card" onclick="flipCard(this)">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img src="/images/card-back-Blue.png" alt="Card Back">
+                            </div>
+                            <div class="card-front">
+                                <img src="/images/card-AceSpades.png" alt="Card Front">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="posB">
+                    <div class="card" onclick="flipCard(this)">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img src="/images/card-back-Blue.png" alt="Card Back">
+                            </div>
+                            <div class="card-front">
+                                <img class="back" src="/images/card-KingHearts.png" alt="" srcset="">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="posC">
+                    <div class="card" onclick="flipCard(this)">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img src="/images/card-back-Blue.png" alt="Card Back">
+                            </div>
+                            <div class="card-front">
+                                <img class="back" src="/images/card-QueenDiamonds.png" alt="" srcset="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="posD">
+                    <div class="card" onclick="flipCard(this)">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img src="/images/card-back-Blue.png" alt="Card Back">
+                            </div>
+                            <div class="card-front">
+                                <img class="back" src="/images/card-JackClubs.png" alt="" srcset="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="posE">
+                    <div class="card" onclick="flipCard(this)">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img src="/images/card-back-Blue.png" alt="Card Back">
+                            </div>
+                            <div class="card-front">
+                                <img class="back" src="/images/card-KingHearts.png" alt="" srcset="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="posF">
+                    <div class="card" onclick="flipCard(this)">
+                        <div class="card-inner">
+                            <div class="card-back">
+                                <img src="/images/card-back-Blue.png" alt="Card Back">
+                            </div>
+                            <div class="card-front">
+                                <img class="back" src="/images/card-JackClubs.png" alt="" srcset="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main> -->
+    <canvas id="cardsCanvas" width="800" height="400" style="border:1px solid #000;"></canvas>
+    <canvas id="gameCanvas" width="700" height="150" style="border:1px solid #000;"></canvas>
+
+    <script>
+        function flipCard(cardElement) {
+            const cardInner = cardElement.querySelector('.card-inner');
+            cardInner.classList.toggle('flip');
+        }
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Button dimensions
+        const buttonWidth = 100;
+        const buttonHeight = 50;
+
+        // Calculate positions to center the buttons
+        const canvasCenterX = canvas.width / 2;
+        const canvasCenterY = canvas.height / 2;
+
+        const buttons = [
+            { text: 'Bet', x: canvasCenterX - 150, y: canvasCenterY - buttonHeight / 2, width: buttonWidth, height: buttonHeight },
+            { text: 'Pack', x: canvasCenterX - buttonWidth / 2, y: canvasCenterY - buttonHeight / 2, width: buttonWidth, height: buttonHeight },
+            { text: 'Draw', x: canvasCenterX + 150 - buttonWidth, y: canvasCenterY - buttonHeight / 2, width: buttonWidth, height: buttonHeight }
+        ];
+
+        // Draw buttons
+        function drawButtons() {
+            buttons.forEach(button => {
+                // Draw button rectangle
+                ctx.fillStyle = '#1A1A1A';
+                ctx.fillRect(button.x, button.y, button.width, button.height);
+
+                // Draw button text
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
+            });
+        }
+
+        // Check if a button is clicked
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            buttons.forEach(button => {
+                if (
+                    mouseX >= button.x &&
+                    mouseX <= button.x + button.width &&
+                    mouseY >= button.y &&
+                    mouseY <= button.y + button.height
+                ) {
+                    if (button.text === 'Draw') {
+                        shuffleCards(); // Shuffle the cards when "Draw" is clicked
+                    } else {
+                        alert(`${button.text} button clicked! ${payout}`);
+                    }
+                }
+            });
+        });
+
+        // Initial draw
+        drawButtons();
+
+        const cardsCanvas = document.getElementById('cardsCanvas');
+        const cardsCtx = cardsCanvas.getContext('2d');
+
+        // Card dimensions
+        const cardWidth = 100;
+        const cardHeight = 150;
+
+        // Card spacing and positioning
+        const cardSpacing = 20; // Space between cards
+        const totalWidth = (cardWidth * 6) + (cardSpacing * 5); // Total width of all cards and spaces
+        const startX = (cardsCanvas.width - totalWidth) / 2; // Center the cards on the canvas
+
+        // List of all card images in the folder with id, value, suit, and src
+        const allCardImages = [
+            // Clubs
+            { id: 1, value: '2', suit: 'Clubs', src: '/images/clubs_2.png' },
+            { id: 2, value: '3', suit: 'Clubs', src: '/images/clubs_3.png' },
+            { id: 3, value: '4', suit: 'Clubs', src: '/images/clubs_4.png' },
+            { id: 4, value: '5', suit: 'Clubs', src: '/images/clubs_5.png' },
+            { id: 5, value: '6', suit: 'Clubs', src: '/images/clubs_6.png' },
+            { id: 6, value: '7', suit: 'Clubs', src: '/images/clubs_7.png' },
+            { id: 7, value: '8', suit: 'Clubs', src: '/images/clubs_8.png' },
+            { id: 8, value: '9', suit: 'Clubs', src: '/images/clubs_9.png' },
+            { id: 9, value: '10', suit: 'Clubs', src: '/images/clubs_10.png' },
+            { id: 10, value: 'Jack', suit: 'Clubs', src: '/images/clubs_J.png' },
+            { id: 11, value: 'Queen', suit: 'Clubs', src: '/images/clubs_Q.png' },
+            { id: 12, value: 'King', suit: 'Clubs', src: '/images/clubs_K.png' },
+            { id: 13, value: 'Ace', suit: 'Clubs', src: '/images/clubs_A.png' },
+
+            // Diamonds
+            { id: 14, value: '2', suit: 'Diamonds', src: '/images/diamonds_2.png' },
+            { id: 15, value: '3', suit: 'Diamonds', src: '/images/diamonds_3.png' },
+            { id: 16, value: '4', suit: 'Diamonds', src: '/images/diamonds_4.png' },
+            { id: 17, value: '5', suit: 'Diamonds', src: '/images/diamonds_5.png' },
+            { id: 18, value: '6', suit: 'Diamonds', src: '/images/diamonds_6.png' },
+            { id: 19, value: '7', suit: 'Diamonds', src: '/images/diamonds_7.png' },
+            { id: 20, value: '8', suit: 'Diamonds', src: '/images/diamonds_8.png' },
+            { id: 21, value: '9', suit: 'Diamonds', src: '/images/diamonds_9.png' },
+            { id: 22, value: '10', suit: 'Diamonds', src: '/images/diamonds_10.png' },
+            { id: 23, value: 'Jack', suit: 'Diamonds', src: '/images/diamonds_J.png' },
+            { id: 24, value: 'Queen', suit: 'Diamonds', src: '/images/diamonds_Q.png' },
+            { id: 25, value: 'King', suit: 'Diamonds', src: '/images/diamonds_K.png' },
+            { id: 26, value: 'Ace', suit: 'Diamonds', src: '/images/diamonds_A.png' },
+
+            // Hearts
+            { id: 27, value: '2', suit: 'Hearts', src: '/images/hearts_2.png' },
+            { id: 28, value: '3', suit: 'Hearts', src: '/images/hearts_3.png' },
+            { id: 29, value: '4', suit: 'Hearts', src: '/images/hearts_4.png' },
+            { id: 30, value: '5', suit: 'Hearts', src: '/images/hearts_5.png' },
+            { id: 31, value: '6', suit: 'Hearts', src: '/images/hearts_6.png' },
+            { id: 32, value: '7', suit: 'Hearts', src: '/images/hearts_7.png' },
+            { id: 33, value: '8', suit: 'Hearts', src: '/images/hearts_8.png' },
+            { id: 34, value: '9', suit: 'Hearts', src: '/images/hearts_9.png' },
+            { id: 35, value: '10', suit: 'Hearts', src: '/images/hearts_10.png' },
+            { id: 36, value: 'Jack', suit: 'Hearts', src: '/images/hearts_J.png' },
+            { id: 37, value: 'Queen', suit: 'Hearts', src: '/images/hearts_Q.png' },
+            { id: 38, value: 'King', suit: 'Hearts', src: '/images/hearts_K.png' },
+            { id: 39, value: 'Ace', suit: 'Hearts', src: '/images/hearts_A.png' },
+
+            // Spades
+            { id: 40, value: '2', suit: 'Spades', src: '/images/spades_2.png' },
+            { id: 41, value: '3', suit: 'Spades', src: '/images/spades_3.png' },
+            { id: 42, value: '4', suit: 'Spades', src: '/images/spades_4.png' },
+            { id: 43, value: '5', suit: 'Spades', src: '/images/spades_5.png' },
+            { id: 44, value: '6', suit: 'Spades', src: '/images/spades_6.png' },
+            { id: 45, value: '7', suit: 'Spades', src: '/images/spades_7.png' },
+            { id: 46, value: '8', suit: 'Spades', src: '/images/spades_8.png' },
+            { id: 47, value: '9', suit: 'Spades', src: '/images/spades_9.png' },
+            { id: 48, value: '10', suit: 'Spades', src: '/images/spades_10.png' },
+            { id: 49, value: 'Jack', suit: 'Spades', src: '/images/spades_J.png' },
+            { id: 50, value: 'Queen', suit: 'Spades', src: '/images/spades_Q.png' },
+            { id: 51, value: 'King', suit: 'Spades', src: '/images/spades_K.png' },
+            { id: 52, value: 'Ace', suit: 'Spades', src: '/images/spades_A.png' }
+        ];
+
+        // Shuffle the array and pick 6 random cards
+        function getRandomCards() {
+            const shuffled = [...allCardImages].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 6);
+        }
+
+        // Generate card positions with random cards
+        function generateCardPositions() {
+            const randomCards = getRandomCards();
+            return randomCards.map((card, index) => ({
+                id: card.id,
+                value: card.value,
+                suit: card.suit,
+                x: startX + index * (cardWidth + cardSpacing),
+                y: 100,
+                front: card.src,
+                back: '/images/card-back-Blue.png',
+                flipped: false,
+                disabled: false // Add a disabled property
+            }));
+        }
+
+        // Initialize card positions
+        let cardPositions = generateCardPositions();
+
+        // Load images
+        function loadImage(src) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.src = src;
+            });
+        }
+
+        // Draw a single card
+        async function drawCard(card) {
+            const img = await loadImage(card.flipped ? card.front : card.back);
+            if (card.disabled) {
+                // Add a semi-transparent overlay for disabled cards
+                cardsCtx.globalAlpha = 0.5;
+            } else {
+                cardsCtx.globalAlpha = 1.0;
+            }
+            cardsCtx.drawImage(img, card.x, card.y, cardWidth, cardHeight);
+            cardsCtx.globalAlpha = 1.0; // Reset alpha
+        }
+
+        // Draw all cards
+        async function drawCards() {
+            cardsCtx.clearRect(0, 0, cardsCanvas.width, cardsCanvas.height);
+            for (const card of cardPositions) {
+                await drawCard(card);
+            }
+        }
+
+        // Check if a card is clicked
+        cardsCanvas.addEventListener('click', (event) => {
+            const rect = cardsCanvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            cardPositions.forEach((card) => {
+                if (
+                    !card.disabled && // Ignore disabled cards
+                    mouseX >= card.x &&
+                    mouseX <= card.x + cardWidth &&
+                    mouseY >= card.y &&
+                    mouseY <= card.y + cardHeight
+                ) {
+                    card.flipped = !card.flipped; // Flip the card
+                    checkForDuplicateValues(); // Check for duplicates after flipping
+                    drawCards(); // Redraw the cards
+                }
+            });
+        });
+
+        // Check for duplicate card values and disable them
+        let payout=0;
+        function checkForDuplicateValues() {
+            const valueCounts = {};
+            cardPositions.forEach(card => {
+                if (card.flipped) {
+                    valueCounts[card.value] = (valueCounts[card.value] || 0) + 1;
+                }
+            });
+
+            cardPositions.forEach(card => {
+                if (card.flipped && valueCounts[card.value] > 1) {
+                    if(card.value>10){
+                        payout=100*valueCounts[card.value];
+                    }
+                    card.disabled = true; // Disable cards with duplicate values
+                } else {
+                    card.disabled = false; // Enable cards without duplicates
+                }
+            });
+        }
+
+        // Shuffle the card positions and display them as per the new sequence
+        function shuffleCards() {
+            // Reset all cards to show their back and enable them
+            cardPositions.forEach(card => {
+                card.flipped = false;
+                card.disabled = false;
+            });
+
+            // Generate new random card positions
+            cardPositions = generateCardPositions();
+
+            // Redraw the shuffled cards
+            drawCards();
+        }
+
+        // Initial draw
+        drawCards();
+    </script>
+</body>
+
+</html>
