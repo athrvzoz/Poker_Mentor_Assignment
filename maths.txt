@@ -1,0 +1,10 @@
+royal flush = value >10 *5 where suit is same(ie all spades or all hearts) = $4000
+four of a kind (aces)= $400
+straight flush = value <10 *5 where suit is same(ie all spades or all hearts) and cards are in sequence (2,3,4,5,6) =$250
+four of a kind = value * 4 where 4 values are same $200
+full house = all suits are involved above value 10 $125
+flush = same suit cards without sequence  $40
+straight = cards in sequence but from different suits $20
+three of a kind = 3 cards having same values $15
+two pair = 2 pairs of matching cards $10
+jack or better = value greater than 10 $5

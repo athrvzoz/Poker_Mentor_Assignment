@@ -146,8 +146,10 @@
         .card {
             position: relative;
             padding: 3px;
-            width: 100px; /* Adjust card width as needed */
-            height: 150px; /* Adjust card height as needed */
+            width: 100px;
+            /* Adjust card width as needed */
+            height: 150px;
+            /* Adjust card height as needed */
             perspective: 1000px;
             cursor: pointer;
         }
@@ -176,24 +178,29 @@
 
         .card-front img,
         .card-back img {
-            width: 100%; /* Make the image fit the card width */
-            height: 100%; /* Make the image fit the card height */
-            object-fit: cover; /* Ensure the image scales properly without distortion */
+            width: 100%;
+            /* Make the image fit the card width */
+            height: 100%;
+            /* Make the image fit the card height */
+            object-fit: cover;
+            /* Ensure the image scales properly without distortion */
         }
 
         .card-front {
             transform: rotateY(180deg);
         }
 
-        canvas{
+        canvas {
             display: block;
-            margin: 0 auto; /* Center horizontally */
+            margin: 0 auto;
+            /* Center horizontally */
             position: relative;
-            top: 50%; /* Center vertically */
-            transform: translateY(-50%); /* Adjust for vertical centering */
+            top: 50%;
+            /* Center vertically */
+            transform: translateY(-50%);
+            /* Adjust for vertical centering */
             border: 1px solid #000;
         }
-        
     </style>
 </head>
 
@@ -361,8 +368,11 @@
                 ) {
                     if (button.text === 'Draw') {
                         shuffleCards(); // Shuffle the cards when "Draw" is clicked
+                    } else if (button.text === 'Pack') {
+                        const payout = calculatePayout(); // Calculate the payout
+                        alert(`Your payout is $${payout}`); // Display the payout in an alert
                     } else {
-                        alert(`${button.text} button clicked! ${payout}`);
+                        alert(`${button.text} button clicked!`);
                     }
                 }
             });
@@ -395,10 +405,10 @@
             { id: 7, value: '8', suit: 'Clubs', src: '/images/clubs_8.png' },
             { id: 8, value: '9', suit: 'Clubs', src: '/images/clubs_9.png' },
             { id: 9, value: '10', suit: 'Clubs', src: '/images/clubs_10.png' },
-            { id: 10, value: 'Jack', suit: 'Clubs', src: '/images/clubs_J.png' },
-            { id: 11, value: 'Queen', suit: 'Clubs', src: '/images/clubs_Q.png' },
-            { id: 12, value: 'King', suit: 'Clubs', src: '/images/clubs_K.png' },
-            { id: 13, value: 'Ace', suit: 'Clubs', src: '/images/clubs_A.png' },
+            { id: 10, value: '11', suit: 'Clubs', src: '/images/clubs_J.png' },
+            { id: 11, value: '12', suit: 'Clubs', src: '/images/clubs_Q.png' },
+            { id: 12, value: '13', suit: 'Clubs', src: '/images/clubs_K.png' },
+            { id: 13, value: '14', suit: 'Clubs', src: '/images/clubs_A.png' },
 
             // Diamonds
             { id: 14, value: '2', suit: 'Diamonds', src: '/images/diamonds_2.png' },
@@ -410,10 +420,10 @@
             { id: 20, value: '8', suit: 'Diamonds', src: '/images/diamonds_8.png' },
             { id: 21, value: '9', suit: 'Diamonds', src: '/images/diamonds_9.png' },
             { id: 22, value: '10', suit: 'Diamonds', src: '/images/diamonds_10.png' },
-            { id: 23, value: 'Jack', suit: 'Diamonds', src: '/images/diamonds_J.png' },
-            { id: 24, value: 'Queen', suit: 'Diamonds', src: '/images/diamonds_Q.png' },
-            { id: 25, value: 'King', suit: 'Diamonds', src: '/images/diamonds_K.png' },
-            { id: 26, value: 'Ace', suit: 'Diamonds', src: '/images/diamonds_A.png' },
+            { id: 23, value: '11', suit: 'Diamonds', src: '/images/diamonds_J.png' },
+            { id: 24, value: '12', suit: 'Diamonds', src: '/images/diamonds_Q.png' },
+            { id: 25, value: '13', suit: 'Diamonds', src: '/images/diamonds_K.png' },
+            { id: 26, value: '14', suit: 'Diamonds', src: '/images/diamonds_A.png' },
 
             // Hearts
             { id: 27, value: '2', suit: 'Hearts', src: '/images/hearts_2.png' },
@@ -425,10 +435,10 @@
             { id: 33, value: '8', suit: 'Hearts', src: '/images/hearts_8.png' },
             { id: 34, value: '9', suit: 'Hearts', src: '/images/hearts_9.png' },
             { id: 35, value: '10', suit: 'Hearts', src: '/images/hearts_10.png' },
-            { id: 36, value: 'Jack', suit: 'Hearts', src: '/images/hearts_J.png' },
-            { id: 37, value: 'Queen', suit: 'Hearts', src: '/images/hearts_Q.png' },
-            { id: 38, value: 'King', suit: 'Hearts', src: '/images/hearts_K.png' },
-            { id: 39, value: 'Ace', suit: 'Hearts', src: '/images/hearts_A.png' },
+            { id: 36, value: '11', suit: 'Hearts', src: '/images/hearts_J.png' },
+            { id: 37, value: '12', suit: 'Hearts', src: '/images/hearts_Q.png' },
+            { id: 38, value: '13', suit: 'Hearts', src: '/images/hearts_K.png' },
+            { id: 39, value: '14', suit: 'Hearts', src: '/images/hearts_A.png' },
 
             // Spades
             { id: 40, value: '2', suit: 'Spades', src: '/images/spades_2.png' },
@@ -440,10 +450,10 @@
             { id: 46, value: '8', suit: 'Spades', src: '/images/spades_8.png' },
             { id: 47, value: '9', suit: 'Spades', src: '/images/spades_9.png' },
             { id: 48, value: '10', suit: 'Spades', src: '/images/spades_10.png' },
-            { id: 49, value: 'Jack', suit: 'Spades', src: '/images/spades_J.png' },
-            { id: 50, value: 'Queen', suit: 'Spades', src: '/images/spades_Q.png' },
-            { id: 51, value: 'King', suit: 'Spades', src: '/images/spades_K.png' },
-            { id: 52, value: 'Ace', suit: 'Spades', src: '/images/spades_A.png' }
+            { id: 49, value: '11', suit: 'Spades', src: '/images/spades_J.png' },
+            { id: 50, value: '12', suit: 'Spades', src: '/images/spades_Q.png' },
+            { id: 51, value: '13', suit: 'Spades', src: '/images/spades_K.png' },
+            { id: 52, value: '14', suit: 'Spades', src: '/images/spades_A.png' }
         ];
 
         // Shuffle the array and pick 6 random cards
@@ -523,7 +533,9 @@
         });
 
         // Check for duplicate card values and disable them
-        let payout=0;
+        let payout = 0;
+        let suitsArray = [];
+        let valuesArray = [];
         function checkForDuplicateValues() {
             const valueCounts = {};
             cardPositions.forEach(card => {
@@ -534,10 +546,9 @@
 
             cardPositions.forEach(card => {
                 if (card.flipped && valueCounts[card.value] > 1) {
-                    if(card.value>10){
-                        payout=100*valueCounts[card.value];
-                    }
                     card.disabled = true; // Disable cards with duplicate values
+                    suitsArray.push(card.suit)
+                    valuesArray.push(card.value)
                 } else {
                     card.disabled = false; // Enable cards without duplicates
                 }
@@ -561,6 +572,82 @@
 
         // Initial draw
         drawCards();
+
+        function calculatePayout() {
+
+            // const flippedCards = cardPositions.filter(card => card.flipped);
+            const flippedCards = [
+            { id: 14, value: '2', suit: 'Diamonds', src: '/images/diamonds_2.png' },
+            { id: 15, value: '3', suit: 'Diamonds', src: '/images/diamonds_3.png' },
+            { id: 16, value: '4', suit: 'Diamonds', src: '/images/diamonds_4.png' },
+            { id: 17, value: '5', suit: 'Diamonds', src: '/images/diamonds_5.png' },
+            { id: 18, value: '6', suit: 'Diamonds', src: '/images/diamonds_6.png' },
+            { id: 19, value: '7', suit: 'Diamonds', src: '/images/diamonds_7.png' },
+            ]
+            const suits = flippedCards.map(card => card.suit);
+            const values = flippedCards.map(card => parseInt(card.value)); // Convert values to integers
+
+            // Sort values for sequence checks
+            const sortedValues = [...values].sort((a, b) => a - b);
+
+            // Helper functions
+            const isSameSuit = suits.every(suit => suit === suits[0]);
+            const isSequence = sortedValues.every((val, i, arr) => i === 0 || val === arr[i - 1] + 1);
+            const valueCounts = values.reduce((counts, val) => {
+                counts[val] = (counts[val] || 0) + 1;
+                return counts;
+            }, {});
+
+            const counts = Object.values(valueCounts);
+            const maxCount = Math.max(...counts);
+
+            let payout = 0;
+
+            // Check for Royal Flush
+            if (isSameSuit && sortedValues.every(val => val >= 10)) {
+                payout = 4000;
+            }
+            // Check for Straight Flush
+            else if (isSameSuit && isSequence && sortedValues[0] < 10) {
+                payout = 250;
+            }
+            // Check for Four of a Kind (Aces)
+            else if (maxCount === 4 && values.includes(14)) {
+                payout = 400;
+            }
+            // Check for Four of a Kind
+            else if (maxCount === 4) {
+                payout = Math.max(...values) * 4;
+            }
+            // Check for Full House
+            else if (counts.includes(3) && counts.includes(2) && Math.min(...values) > 10) {
+                payout = 125;
+            }
+            // Check for Flush
+            else if (isSameSuit) {
+                payout = 40;
+            }
+            // Check for Straight
+            else if (isSequence) {
+                payout = 20;
+            }
+            // Check for Three of a Kind
+            else if (maxCount === 3) {
+                payout = 15;
+            }
+            // Check for Two Pair
+            else if (counts.filter(count => count === 2).length === 2) {
+                payout = 10;
+            }
+            // Check for Jack or Better
+            else if (values.some(val => val > 10)) {
+                payout = 5;
+            } else {
+                payout = 0;
+            }
+
+            return payout;
+        }
     </script>
 </body>
 
