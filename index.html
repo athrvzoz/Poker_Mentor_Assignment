@@ -5,313 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
-
-        body {
-            display: grid;
-            grid-row: inherit;
-            justify-content: center;
-            width: 100vw;
-            height: 100vh;
-            /* background-color: rgba(36, 15, 228, 0.8); */
-        }
-
-        header {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
-        }
-
-        .header-title-container {
-            font-size: large;
-            color: rgb(0, 0, 0);
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            animation: pulsate 2s infinite;
-        }
-
-        .header-round-info-container {
-            display: flex;
-            justify-content: space-evenly;
-
-        }
-
-        .header-img {
-            height: 75px;
-            border-radius: 5px;
-            border: 1px solid rgb(255, 255, 255);
-            padding: 5px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transform: rotate(-3deg);
-        }
-
-        .header-status-info-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .header-button-container,
-        .header-score-container,
-        .header-round-container,
-        .header-img-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #playGame {
-            appearance: none;
-            background-color: transparent;
-            border: 2px solid #1A1A1A;
-            border-radius: 15px;
-            box-sizing: border-box;
-            color: #3B3B3B;
-            cursor: pointer;
-            /* display: none; */
-            font-family: var(--primary-font);
-            font-size: 16px;
-            font-weight: 600;
-            line-height: normal;
-            margin: 0;
-            min-height: 60px;
-            min-width: 0;
-            outline: none;
-            padding: 16px 24px;
-            text-align: center;
-            text-decoration: none;
-            transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-            width: 100%;
-            will-change: transform;
-            animation: game-play-button-fade-in 2s infinite;
-        }
-
-
-        @keyframes game-play-button-fade-in {
-            0% {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-                box-shadow: 0 4px 8px 0;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        @keyframes pulsate {
-            0% {
-                opacity: 0.5;
-            }
-
-            50% {
-                /* transform: scale(1.2); */
-                opacity: 1;
-                /* box-shadow: 0 4px 8px 0; */
-            }
-
-            100% {
-                /* transform: scale(1); */
-                opacity: 0.5;
-            }
-        }
-
-        main {
-            display: flex;
-            justify-content: space-evenly;
-            margin-top: 70px;
-            width: 100%;
-            height: 180px;
-        }
-
-
-
-        .cards {
-            display: flex;
-            justify-content: space-evenly;
-            padding: 5px;
-            width: 100%;
-            height: 100%;
-            border: 2px solid black;
-        }
-
-        .card {
-            position: relative;
-            padding: 3px;
-            width: 100px;
-            /* Adjust card width as needed */
-            height: 150px;
-            /* Adjust card height as needed */
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-        }
-
-        .card-inner.flip {
-            transform: rotateY(180deg);
-        }
-
-        .card-front,
-        .card-back {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-        }
-
-        .card-front img,
-        .card-back img {
-            width: 100%;
-            /* Make the image fit the card width */
-            height: 100%;
-            /* Make the image fit the card height */
-            object-fit: cover;
-            /* Ensure the image scales properly without distortion */
-        }
-
-        .card-front {
-            transform: rotateY(180deg);
-        }
-
-        canvas {
-            display: block;
-            margin: 0 auto;
-            /* Center horizontally */
-            position: relative;
-            top: 50%;
-            /* Center vertically */
-            transform: translateY(-50%);
-            /* Adjust for vertical centering */
-            border: 1px solid #000;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
         <div class="header-title-container">
-            <h1>POKER</h1>
+            <div class="header-img-container">
+                <img src="./images/card-AceSpades.png" alt="aaaa" class="header-img">
+            </div>
+            <h1>POKER HUB</h1>
         </div>
         <div class="header-round-info-container">
-            <div class="header-img-container">
-                <img src="./images/AceSpades.png" alt="aaaa" class="header-img">
-            </div>
             <div class="header-score-container">
-                <h2 class="score">Score&nbsp;<span class="badge">0</span></h2>
+                <h2 class="score">Balance&nbsp;<span class="badge">1000</span></h2>
             </div>
             <div class="header-round-container">
-                <h2 class="round">Round&nbsp;<span class="badge">0</span></h2>
+                <h2 class="round">Won&nbsp;<span class="badge">0</span></h2>
             </div>
         </div>
-        <div class="header-status-info-container">
-            <p class="current-status">
-                Click 'Play Game' button to play game
-            </p>
-        </div>
-        <div class="header-button-container">
+        <!-- <div class="header-button-container">
             <div class="game-play-button-container">
                 <button id="playGame" class="play-game">Play Game</button>
             </div>
-        </div>
+        </div> -->
     </header>
-    <!-- <main>
-        <div class="card-container">
-            <div class="cards">
-                <div class="posA">
-                    <div class="card" onclick="flipCard(this)">
-                        <div class="card-inner">
-                            <div class="card-back">
-                                <img src="/images/card-back-Blue.png" alt="Card Back">
-                            </div>
-                            <div class="card-front">
-                                <img src="/images/card-AceSpades.png" alt="Card Front">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="posB">
-                    <div class="card" onclick="flipCard(this)">
-                        <div class="card-inner">
-                            <div class="card-back">
-                                <img src="/images/card-back-Blue.png" alt="Card Back">
-                            </div>
-                            <div class="card-front">
-                                <img class="back" src="/images/card-KingHearts.png" alt="" srcset="">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="posC">
-                    <div class="card" onclick="flipCard(this)">
-                        <div class="card-inner">
-                            <div class="card-back">
-                                <img src="/images/card-back-Blue.png" alt="Card Back">
-                            </div>
-                            <div class="card-front">
-                                <img class="back" src="/images/card-QueenDiamonds.png" alt="" srcset="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="posD">
-                    <div class="card" onclick="flipCard(this)">
-                        <div class="card-inner">
-                            <div class="card-back">
-                                <img src="/images/card-back-Blue.png" alt="Card Back">
-                            </div>
-                            <div class="card-front">
-                                <img class="back" src="/images/card-JackClubs.png" alt="" srcset="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="posE">
-                    <div class="card" onclick="flipCard(this)">
-                        <div class="card-inner">
-                            <div class="card-back">
-                                <img src="/images/card-back-Blue.png" alt="Card Back">
-                            </div>
-                            <div class="card-front">
-                                <img class="back" src="/images/card-KingHearts.png" alt="" srcset="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="posF">
-                    <div class="card" onclick="flipCard(this)">
-                        <div class="card-inner">
-                            <div class="card-back">
-                                <img src="/images/card-back-Blue.png" alt="Card Back">
-                            </div>
-                            <div class="card-front">
-                                <img class="back" src="/images/card-JackClubs.png" alt="" srcset="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main> -->
-    <canvas id="cardsCanvas" width="800" height="400" style="border:1px solid #000;"></canvas>
+    <canvas id="cardsCanvas" width="800" height="300" style="border:1px solid #000;"></canvas>
     <canvas id="gameCanvas" width="700" height="150" style="border:1px solid #000;"></canvas>
 
     <script>
@@ -324,62 +43,136 @@
         const ctx = canvas.getContext('2d');
 
         // Button dimensions
-        const buttonWidth = 100;
-        const buttonHeight = 50;
+        const buttonRadius = 30; // Radius for circular buttons
 
         // Calculate positions to center the buttons
         const canvasCenterX = canvas.width / 2;
         const canvasCenterY = canvas.height / 2;
 
+        // Add the buttons to the buttons array
         const buttons = [
-            { text: 'Bet', x: canvasCenterX - 150, y: canvasCenterY - buttonHeight / 2, width: buttonWidth, height: buttonHeight },
-            { text: 'Pack', x: canvasCenterX - buttonWidth / 2, y: canvasCenterY - buttonHeight / 2, width: buttonWidth, height: buttonHeight },
-            { text: 'Draw', x: canvasCenterX + 150 - buttonWidth, y: canvasCenterY - buttonHeight / 2, width: buttonWidth, height: buttonHeight }
+            { text: 'Bet', x: canvasCenterX - 2.5 * buttonRadius - 60, y: canvasCenterY - buttonRadius },
+            { text: 'Pack', x: canvasCenterX - 1.5 * buttonRadius - 20, y: canvasCenterY - buttonRadius },
+            { text: 'Draw', x: canvasCenterX + 0.5 * buttonRadius + 20, y: canvasCenterY - buttonRadius },
+            { text: 'Reveal', x: canvasCenterX + 1.5 * buttonRadius + 60, y: canvasCenterY - buttonRadius }
         ];
 
-        // Draw buttons
+        // Initialize score, bet amount, and round
+        let score = 1000; // Starting balance
+        let betAmount = 5; // Default bet amount
+        let wonAmount = 0; // Amount won in the current round
+        let canPack = false; // Flag to track if "Pack" can be clicked
+        let canDraw = true; // Flag to track if "Draw" can be clicked
+        let canPack2 = false;
+
+        // Update the balance and won display
+        function updateDisplay() {
+            document.querySelector('.score .badge').textContent = score; // Update balance
+            document.querySelector('.round .badge').textContent = wonAmount; // Update won amount
+        }
+
+        // Draw circular buttons and bet amount
         function drawButtons() {
             buttons.forEach(button => {
-                // Draw button rectangle
+                // Draw circular button
+                ctx.beginPath();
+                ctx.arc(button.x + buttonRadius, button.y + buttonRadius, buttonRadius, 0, Math.PI * 2);
                 ctx.fillStyle = '#1A1A1A';
-                ctx.fillRect(button.x, button.y, button.width, button.height);
+                ctx.fill();
+                ctx.shadowColor = '#FFD700'; // Gold color
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.strokeStyle = '#FFD700'; // Gold border
+                ctx.lineWidth = 2;
+                ctx.stroke();
 
                 // Draw button text
                 ctx.fillStyle = '#FFFFFF';
-                ctx.font = '16px Arial';
+                ctx.font = '14px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
+                ctx.fillText(button.text, button.x + buttonRadius, button.y + buttonRadius);
+
+                // Reset shadow
+                ctx.shadowBlur = 0;
             });
+
+            // Draw bet amount in the center of the buttons
+            ctx.fillStyle = '#FFD700'; // Gold color
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`Bet: $${betAmount}`, canvasCenterX, canvasCenterY + 70); // Position below buttons
         }
 
-        // Check if a button is clicked
+        // Initial draw
+        drawButtons();
+
+        // Handle button clicks
         canvas.addEventListener('click', (event) => {
             const rect = canvas.getBoundingClientRect();
             const mouseX = event.clientX - rect.left;
             const mouseY = event.clientY - rect.top;
 
             buttons.forEach(button => {
-                if (
-                    mouseX >= button.x &&
-                    mouseX <= button.x + button.width &&
-                    mouseY >= button.y &&
-                    mouseY <= button.y + button.height
-                ) {
+                // Check if the click is inside the circular button
+                const dx = mouseX - (button.x + buttonRadius);
+                const dy = mouseY - (button.y + buttonRadius);
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance <= buttonRadius) {
                     if (button.text === 'Draw') {
-                        shuffleCards(); // Shuffle the cards when "Draw" is clicked
+                        if (canDraw) {
+                            // Deduct bet amount from balance
+                            score -= betAmount;
+                            wonAmount = 0; // Reset won amount
+                            canPack = true; // Enable "Pack" button
+                            canDraw = false; // Disable "Draw" button
+                            canPack2=false;
+                            updateDisplay(); // Update balance and won display
+                            shuffleCards(); // Shuffle the cards
+                        } else {
+                            alert('You must click "Pack" before drawing again!');
+                        }
                     } else if (button.text === 'Pack') {
-                        const payout = calculatePayout(); // Calculate the payout
-                        alert(`Your payout is $${payout}`); // Display the payout in an alert
-                    } else {
-                        alert(`${button.text} button clicked!`);
+                        let counter = 0;
+                        cardPositions.forEach(card => {
+                            if (card.flipped = true) {
+                                counter++;
+                            }// Flip all cards
+                        });
+                        if (counter >= 5) {
+                            canPack2 = true;
+                        }
+                        if (canPack && canPack2) {
+                            // Calculate payout
+                            const payout = calculatePayout();
+                            wonAmount = payout; // Update won amount
+                            score += wonAmount; // Add won amount to balance
+                            canPack = false; // Disable "Pack" button
+                            canDraw = true; // Enable "Draw" button
+                            updateDisplay(); // Update balance and won display
+                        } else {
+                            alert('You must click "Draw" and "Reveal" before packing!');
+                        }
+                    } else if (button.text === 'Reveal') {
+                        canPack2 = true;
+                        revealAllCards(); // Reveal all cards
+                    } else if (button.text === 'Bet') {
+                        alert('Bet button clicked!');
                     }
                 }
             });
         });
 
-        // Initial draw
-        drawButtons();
+        // Function to reveal all cards
+        function revealAllCards() {
+            cardPositions.forEach(card => {
+                card.flipped = true; // Flip all cards
+            });
+            drawCards(); // Redraw the cards
+        }
 
         const cardsCanvas = document.getElementById('cardsCanvas');
         const cardsCtx = cardsCanvas.getContext('2d');
@@ -389,8 +182,8 @@
         const cardHeight = 150;
 
         // Card spacing and positioning
-        const cardSpacing = 20; // Space between cards
-        const totalWidth = (cardWidth * 6) + (cardSpacing * 5); // Total width of all cards and spaces
+        const cardSpacing = 30; // Space between cards
+        const totalWidth = (cardWidth * 5) + (cardSpacing * 4); // Total width of all cards and spaces
         const startX = (cardsCanvas.width - totalWidth) / 2; // Center the cards on the canvas
 
         // List of all card images in the folder with id, value, suit, and src
@@ -459,7 +252,7 @@
         // Shuffle the array and pick 6 random cards
         function getRandomCards() {
             const shuffled = [...allCardImages].sort(() => Math.random() - 0.5);
-            return shuffled.slice(0, 6);
+            return shuffled.slice(0, 5);
         }
 
         // Generate card positions with random cards
@@ -470,9 +263,9 @@
                 value: card.value,
                 suit: card.suit,
                 x: startX + index * (cardWidth + cardSpacing),
-                y: 100,
+                y: (cardsCanvas.height - cardHeight) / 2, // Center vertically
                 front: card.src,
-                back: '/images/card-back-Blue.png',
+                back: '/images/back_light.png',
                 flipped: false,
                 disabled: false // Add a disabled property
             }));
@@ -490,17 +283,22 @@
             });
         }
 
-        // Draw a single card
+        // Draw a single card with a box shadow
         async function drawCard(card) {
             const img = await loadImage(card.flipped ? card.front : card.back);
-            if (card.disabled) {
-                // Add a semi-transparent overlay for disabled cards
-                cardsCtx.globalAlpha = 0.5;
-            } else {
-                cardsCtx.globalAlpha = 1.0;
-            }
+
+            // Add box shadow effect
+            cardsCtx.save();
+            cardsCtx.shadowColor = 'rgba(255, 255, 255, 0.5)'; // Shadow color
+            cardsCtx.shadowBlur = 10; // Blur radius
+            cardsCtx.shadowOffsetX = 5; // Horizontal offset
+            cardsCtx.shadowOffsetY = 5; // Vertical offset
+
+            // Draw the card
             cardsCtx.drawImage(img, card.x, card.y, cardWidth, cardHeight);
-            cardsCtx.globalAlpha = 1.0; // Reset alpha
+
+            // Restore canvas state
+            cardsCtx.restore();
         }
 
         // Draw all cards
@@ -575,15 +373,15 @@
 
         function calculatePayout() {
 
-            // const flippedCards = cardPositions.filter(card => card.flipped);
-            const flippedCards = [
-            { id: 14, value: '2', suit: 'Diamonds', src: '/images/diamonds_2.png' },
-            { id: 15, value: '3', suit: 'Diamonds', src: '/images/diamonds_3.png' },
-            { id: 16, value: '4', suit: 'Diamonds', src: '/images/diamonds_4.png' },
-            { id: 17, value: '5', suit: 'Diamonds', src: '/images/diamonds_5.png' },
-            { id: 18, value: '6', suit: 'Diamonds', src: '/images/diamonds_6.png' },
-            { id: 19, value: '7', suit: 'Diamonds', src: '/images/diamonds_7.png' },
-            ]
+            const flippedCards = cardPositions.filter(card => card.flipped);
+            // const flippedCards = [
+            //     { id: 36, value: '11', suit: 'Hearts', src: '/images/hearts_J.png' },
+            //     { id: 51, value: '13', suit: 'Spades', src: '/images/spades_K.png' },
+            //     { id: 26, value: '14', suit: 'Diamonds', src: '/images/diamonds_A.png' },
+            //     { id: 12, value: '13', suit: 'Clubs', src: '/images/clubs_K.png' },
+            //     { id: 5, value: '6', suit: 'Clubs', src: '/images/clubs_6.png' },
+            //     { id: 6, value: '7', suit: 'Clubs', src: '/images/clubs_7.png' }
+            // ]
             const suits = flippedCards.map(card => card.suit);
             const values = flippedCards.map(card => parseInt(card.value)); // Convert values to integers
 
