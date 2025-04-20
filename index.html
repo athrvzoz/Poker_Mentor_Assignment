@@ -16,14 +16,7 @@
             </div>
             <h1>POKER HUB</h1>
         </div>
-        <div class="header-round-info-container">
-            <div class="header-score-container">
-                <h2 class="score">Balance&nbsp;<span class="badge">1000</span></h2>
-            </div>
-            <div class="header-round-container">
-                <h2 class="round">Won&nbsp;<span class="badge">0</span></h2>
-            </div>
-        </div>
+
         <!-- <div class="header-button-container">
             <div class="game-play-button-container">
                 <button id="playGame" class="play-game">Play Game</button>
@@ -31,6 +24,31 @@
         </div> -->
     </header>
     <canvas id="cardsCanvas" width="800" height="300" style="border:1px solid #000;"></canvas>
+    <div class="header-round-info-container">
+        <div class="header-score-container">
+            <h2 class="score">Balance&nbsp;<span class="badge">1000</span></h2>
+        </div>
+        <div class="header-round-container">
+            <h2 class="round">Won&nbsp;<span class="badge">0</span></h2>
+        </div>
+    </div>
+    <!-- Dropdown for selecting bet amount -->
+    <div id="betSelector" style="display: hidden; text-align: center; margin-top: 10px;">
+        <label for="betAmount">Select Bet Amount:</label>
+        <select id="betAmount">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <button id="setBetButton">Set Bet</button>
+    </div>
     <canvas id="gameCanvas" width="700" height="150" style="border:1px solid #000;"></canvas>
 
     <script>
@@ -129,7 +147,7 @@
                             wonAmount = 0; // Reset won amount
                             canPack = true; // Enable "Pack" button
                             canDraw = false; // Disable "Draw" button
-                            canPack2=false;
+                            canPack2 = false;
                             updateDisplay(); // Update balance and won display
                             shuffleCards(); // Shuffle the cards
                         } else {
@@ -160,10 +178,22 @@
                         canPack2 = true;
                         revealAllCards(); // Reveal all cards
                     } else if (button.text === 'Bet') {
-                        alert('Bet button clicked!');
+                        // alert('Bet button clicked!');
+                        document.getElementById('betSelector').style.display = 'block';
                     }
                 }
             });
+        });
+
+        document.getElementById('setBetButton').addEventListener('click', () => {
+            const selectedBet = parseInt(document.getElementById('betAmount').value);
+            if (selectedBet > 0 && selectedBet < 10) {
+                betAmount = selectedBet; // Update the bet amount
+                alert(`Bet amount set to $${betAmount}`);
+                document.getElementById('betSelector').style.display = 'none'; // Hide the bet selector
+            } else {
+                alert('Invalid bet amount. Please select a value below 11.');
+            }
         });
 
         // Function to reveal all cards
@@ -403,45 +433,45 @@
 
             // Check for Royal Flush
             if (isSameSuit && sortedValues.every(val => val >= 10)) {
-                payout = 4000;
+                payout = 4000 / 5 * betAmount;
             }
             // Check for Straight Flush
             else if (isSameSuit && isSequence && sortedValues[0] < 10) {
-                payout = 250;
+                payout = 250 / 5 * betAmount;
             }
             // Check for Four of a Kind (Aces)
             else if (maxCount === 4 && values.includes(14)) {
-                payout = 400;
+                payout = 400 / 5 * betAmount;
             }
             // Check for Four of a Kind
             else if (maxCount === 4) {
-                payout = Math.max(...values) * 4;
+                payout = (Math.max(...values) * 4) / 5 * betAmount;
             }
             // Check for Full House
             else if (counts.includes(3) && counts.includes(2) && Math.min(...values) > 10) {
-                payout = 125;
+                payout = 125 / 5 * betAmount;
             }
             // Check for Flush
             else if (isSameSuit) {
-                payout = 40;
+                payout = 40 / 5 * betAmount;
             }
             // Check for Straight
             else if (isSequence) {
-                payout = 20;
+                payout = 20 / 5 * betAmount;
             }
             // Check for Three of a Kind
             else if (maxCount === 3) {
-                payout = 15;
+                payout = 15 / 5 * betAmount;
             }
             // Check for Two Pair
             else if (counts.filter(count => count === 2).length === 2) {
-                payout = 10;
+                payout = 10 / 5 * betAmount;
             }
             // Check for Jack or Better
             else if (values.some(val => val > 10)) {
-                payout = 5;
+                payout = 5 / 5 * betAmount;
             } else {
-                payout = 0;
+                payout = 0 / 5 * betAmount;
             }
 
             return payout;
