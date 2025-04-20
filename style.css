@@ -1,3 +1,4 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 :root {
@@ -17,9 +18,9 @@
     --secondary-color: #ffffff;
 
     --primary-font: 'Quicksand', sans-serif;
+
 }
 
-/* @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap'); */
 
 body {
     display: grid;
@@ -30,12 +31,16 @@ body {
     color: #FFFFFF;
     background-color: #000;
     /* background-color: rgba(36, 15, 228, 0.8); */
+    /* background-image: url("./images/bg12.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%; */
 }
 
 header {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+    font: 1em var(--primary-font);
 }
 
 .header-title-container {
@@ -238,4 +243,8 @@ button:hover {
     /* Dark text on hover */
     box-shadow: 0 0 20px #FFD700;
     /* Stronger glow on hover */
+}
+
+#betSelector{
+    justify-content: space-evenly;
 }

@@ -16,14 +16,13 @@
             </div>
             <h1>POKER HUB</h1>
         </div>
-
         <!-- <div class="header-button-container">
             <div class="game-play-button-container">
                 <button id="playGame" class="play-game">Play Game</button>
             </div>
         </div> -->
     </header>
-    <canvas id="cardsCanvas" width="800" height="300" style="border:1px solid #000;"></canvas>
+    <canvas id="cardsCanvas" width="800" height="250" style="border:1px solid #000;"></canvas>
     <div class="header-round-info-container">
         <div class="header-score-container">
             <h2 class="score">Balance&nbsp;<span class="badge">1000</span></h2>
@@ -31,9 +30,12 @@
         <div class="header-round-container">
             <h2 class="round">Won&nbsp;<span class="badge">0</span></h2>
         </div>
+        <div class="header-round-container">
+            <h2 class="bet">Bet&nbsp;<span class="badge">$5</span></h2>
+        </div>
     </div>
     <!-- Dropdown for selecting bet amount -->
-    <div id="betSelector" style="display: hidden; text-align: center; margin-top: 10px;">
+    <div id="betSelector" style="display: none; text-align: center; margin-top: 10px;">
         <label for="betAmount">Select Bet Amount:</label>
         <select id="betAmount">
             <option value="1">1</option>
@@ -49,7 +51,7 @@
         </select>
         <button id="setBetButton">Set Bet</button>
     </div>
-    <canvas id="gameCanvas" width="700" height="150" style="border:1px solid #000;"></canvas>
+    <canvas id="gameCanvas" width="700" height="100" style="border:1px solid #000;"></canvas>
 
     <script>
         function flipCard(cardElement) {
@@ -70,7 +72,7 @@
         // Add the buttons to the buttons array
         const buttons = [
             { text: 'Bet', x: canvasCenterX - 2.5 * buttonRadius - 60, y: canvasCenterY - buttonRadius },
-            { text: 'Pack', x: canvasCenterX - 1.5 * buttonRadius - 20, y: canvasCenterY - buttonRadius },
+            { text: 'Deal', x: canvasCenterX - 1.5 * buttonRadius - 20, y: canvasCenterY - buttonRadius },
             { text: 'Draw', x: canvasCenterX + 0.5 * buttonRadius + 20, y: canvasCenterY - buttonRadius },
             { text: 'Reveal', x: canvasCenterX + 1.5 * buttonRadius + 60, y: canvasCenterY - buttonRadius }
         ];
@@ -87,6 +89,7 @@
         function updateDisplay() {
             document.querySelector('.score .badge').textContent = score; // Update balance
             document.querySelector('.round .badge').textContent = wonAmount; // Update won amount
+            document.querySelector('.bet .badge').textContent = betAmount; // Update bet amount
         }
 
         // Draw circular buttons and bet amount
@@ -115,13 +118,6 @@
                 // Reset shadow
                 ctx.shadowBlur = 0;
             });
-
-            // Draw bet amount in the center of the buttons
-            ctx.fillStyle = '#FFD700'; // Gold color
-            ctx.font = '20px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(`Bet: $${betAmount}`, canvasCenterX, canvasCenterY + 70); // Position below buttons
         }
 
         // Initial draw
@@ -153,7 +149,7 @@
                         } else {
                             alert('You must click "Pack" before drawing again!');
                         }
-                    } else if (button.text === 'Pack') {
+                    } else if (button.text === 'Deal') {
                         let counter = 0;
                         cardPositions.forEach(card => {
                             if (card.flipped = true) {
@@ -179,7 +175,7 @@
                         revealAllCards(); // Reveal all cards
                     } else if (button.text === 'Bet') {
                         // alert('Bet button clicked!');
-                        document.getElementById('betSelector').style.display = 'block';
+                        document.getElementById('betSelector').style.display = 'flex';
                     }
                 }
             });
@@ -187,9 +183,10 @@
 
         document.getElementById('setBetButton').addEventListener('click', () => {
             const selectedBet = parseInt(document.getElementById('betAmount').value);
-            if (selectedBet > 0 && selectedBet < 10) {
+            if (selectedBet > 0 && selectedBet <= 10) {
                 betAmount = selectedBet; // Update the bet amount
                 alert(`Bet amount set to $${betAmount}`);
+                updateDisplay();
                 document.getElementById('betSelector').style.display = 'none'; // Hide the bet selector
             } else {
                 alert('Invalid bet amount. Please select a value below 11.');
@@ -313,6 +310,12 @@
             });
         }
 
+        // Draw bet amount in the center of the buttons
+        cardsCtx.fillStyle = '#FFD700'; // Gold color
+        cardsCtx.font = '20px Arial';
+        cardsCtx.textAlign = 'center';
+        cardsCtx.textBaseline = 'middle';
+        cardsCtx.fillText(`Bet: $${betAmount}`, canvasCenterX, canvasCenterY); // Position below buttons
         // Draw a single card with a box shadow
         async function drawCard(card) {
             const img = await loadImage(card.flipped ? card.front : card.back);
@@ -405,12 +408,11 @@
 
             const flippedCards = cardPositions.filter(card => card.flipped);
             // const flippedCards = [
-            //     { id: 36, value: '11', suit: 'Hearts', src: '/images/hearts_J.png' },
-            //     { id: 51, value: '13', suit: 'Spades', src: '/images/spades_K.png' },
-            //     { id: 26, value: '14', suit: 'Diamonds', src: '/images/diamonds_A.png' },
+            //     { id: 9, value: '10', suit: 'Clubs', src: '/images/clubs_10.png' },
+            //     { id: 10, value: '11', suit: 'Clubs', src: '/images/clubs_J.png' },
+            //     { id: 11, value: '12', suit: 'Clubs', src: '/images/clubs_Q.png' },
             //     { id: 12, value: '13', suit: 'Clubs', src: '/images/clubs_K.png' },
-            //     { id: 5, value: '6', suit: 'Clubs', src: '/images/clubs_6.png' },
-            //     { id: 6, value: '7', suit: 'Clubs', src: '/images/clubs_7.png' }
+            //     { id: 13, value: '14', suit: 'Clubs', src: '/images/clubs_A.png' },
             // ]
             const suits = flippedCards.map(card => card.suit);
             const values = flippedCards.map(card => parseInt(card.value)); // Convert values to integers
