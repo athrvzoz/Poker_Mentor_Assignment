@@ -1,588 +1,430 @@
-
-// const cardObjectDefinitions = [
-//     {id:1, imagePath:'/images/card-KingHearts.png'},
-//     {id:2, imagePath:'/images/card-JackClubs.png'},
-//     {id:3, imagePath:'/images/card-QueenDiamonds.png'},
-//     {id:4, imagePath:'/images/card-AceSpades.png'}
-// ]
-// const aceId = 4
-
-// const cardBackImgPath = '/images/card-back-blue.png'
-
-// let cards = []
-
-// const playGameButtonElem = document.getElementById('playGame')
-
-// const cardContainerElem = document.querySelector('.card-container')
-
-// const collapsedGridAreaTemplate = '"a a" "a a"'
-// const cardCollectionCellClass = ".card-pos-a"
-
-// const numCards = cardObjectDefinitions.length
-
-// let cardPositions = []
-
-
-// let gameInProgress = false 
-// let shufflingInProgress = false 
-// let cardsRevealed = false
-
-
-// const currentGameStatusElem = document.querySelector('.current-status')
-// const scoreContainerElem = document.querySelector('.header-score-container')
-// const scoreElem = document.querySelector('.score')
-// const roundContainerElem = document.querySelector('.header-round-container')
-// const roundElem = document.querySelector('.round')
-
-// const winColor = "green"
-// const loseColor = "red"
-// const primaryColor = "black"
-
-// let roundNum = 0
-// let maxRounds = 4
-// let score = 0
-
-// let gameObj = {}
-
-// const localStorageGameKey = "HTA"
-
-
-// /* <div class="card">
-// <div class="card-inner">
-//     <div class="card-front">
-//         <img src="/images/card-JackClubs.png" alt="" class="card-img">
-//     </div>
-//     <div class="card-back">
-//         <img src="/images/card-back-Blue.png" alt="" class="card-img">
-//     </div>
-// </div>
-// </div> */
-
-
-// loadGame()
-
-// function loadGame(){
-//     createCards()
-
-//     cards = document.querySelectorAll('.card')
-
-//     cardFlyInEffect()
-
-//     playGameButtonElem.addEventListener('click', ()=>startGame())
-
-//     updateStatusElement(scoreContainerElem,"none")
-//     updateStatusElement(roundContainerElem,"none")
-
-// }x
-
-// function gameOver()
-// {
-//     updateStatusElement(scoreContainerElem,"none")
-//     updateStatusElement(roundContainerElem,"none")
-
-//     const gameOverMessage = `Game Over! Final Score - <span class = 'badge'>${score}</span> Click 'Play Game' button to play again`
-
-//     updateStatusElement(currentGameStatusElem,"block",primaryColor,gameOverMessage)
-
-//     gameInProgress = false
-//     playGameButtonElem.disabled = false
-// }
-
-// function endRound()
-// {
-//     setTimeout(()=>{
-//         if(roundNum == maxRounds)
-//         {
-//             gameOver()
-//             return
-//         }
-//         else
-//         {
-//             startRound()
-//         }
-//     },3000)
-// }
-
-// function chooseCard(card)
-// {
-//     if(canChooseCard())
-//     {
-//         evaluateCardChoice(card)
-//         saveGameObjectToLocalStorage(score, roundNum)
-//         flipCard(card,false)
-
-//         setTimeout(() => {
-//             flipCards(false)
-//             updateStatusElement(currentGameStatusElem,"block", primaryColor,"Card positions revealed")
-
-//             endRound()
-
-//         },3000)
-//         cardsRevealed = true
-//     }
-
-// }
-
-// function calculateScoreToAdd(roundNum)
-// {
-//     if(roundNum == 1)
-//     {
-//         return 100
-//     }
-//     else if(roundNum == 2)
-//     {
-//         return 50
-//     }
-//     else if(roundNum == 3)
-//     {
-//         return 25
-//     }
-//     else
-//     {
-//         return 10
-//     }
-// }
-
-// function calculateScore()
-// {
-//     const scoreToAdd = calculateScoreToAdd(roundNum)
-//     score = score + scoreToAdd
-// }
-
-// function updateScore()
-// {
-//     calculateScore()
-//     updateStatusElement(scoreElem, "block", primaryColor, `Score <span class='badge'>${score}</span>`)
-
-// }
-
-// function updateStatusElement(elem, display, color, innerHTML)
-// {
-//     elem.style.display = display
-
-//     if(arguments.length > 2)
-//     {
-//         elem.style.color = color
-//         elem.innerHTML = innerHTML
-//     }
-
-// }
-
-// function outputChoiceFeedBack(hit)
-// {
-//     if(hit)
-//     {
-//         updateStatusElement(currentGameStatusElem, "block", winColor, "Hit!! - Well Done!! :)")
-//     }
-//     else
-//     {
-//         updateStatusElement(currentGameStatusElem, "block", loseColor, "Missed!! :(")
-//     }
-// }
-
-// function evaluateCardChoice(card)
-// {
-//     if(card.id == aceId)
-//     {
-//         updateScore()
-//         outputChoiceFeedBack(true)
-//     }
-//     else
-//     {
-//         outputChoiceFeedBack(false)
-//     }
-// }
-
-// function canChooseCard()
-// {
-//     return gameInProgress == true && !shufflingInProgress && !cardsRevealed
-// }
-
-// function checkForIncompleteGame()
-// {
-//     const serializedGameObj = getLocalStorageItemValue(localStorageGameKey)
-//     if(serializedGameObj)
-//     {
-//         gameObj = getObjectFromJSON(serializedGameObj)
-
-//         if(gameObj.round >= maxRounds)
-//         {
-//             removeLocalStorageItem(localStorageGameKey)
-//         }
-//         else
-//         {
-//             if(confirm('Would you like to continue with your last game?'))
-//             {
-//                 score = gameObj.score
-//                 roundNum = gameObj.round
-//             }
-//         }
-
-//     }
-
-// }
-
-// function startGame(){
-//     initializeNewGame()
-//     startRound()
-
-// }
-// function initializeNewGame(){
-//     score = 0
-//     roundNum = 0
-
-//     checkForIncompleteGame()
-
-//     shufflingInProgress = false
-
-//     updateStatusElement(scoreContainerElem,"flex")
-//     updateStatusElement(roundContainerElem,"flex")
-
-//     updateStatusElement(scoreElem,"block",primaryColor,`Score <span class='badge'>${score}</span>`)
-//     updateStatusElement(roundElem,"block",primaryColor,`Round <span class='badge'>${roundNum}</span>`)
-
-// }
-// function startRound()
-// {
-//     initializeNewRound()
-//     collectCards()
-//     flipCards(true)
-//     shuffleCards()
-
-// }
-// function initializeNewRound()
-// {
-//     roundNum++
-//     playGameButtonElem.disabled = true
-
-//     gameInProgress = true
-//     shufflingInProgress = true
-//     cardsRevealed = false
-
-//     updateStatusElement(currentGameStatusElem, "block", primaryColor, "Shuffling...")
-    
-//     updateStatusElement(roundElem, "block", primaryColor, `Round <span class='badge'>${roundNum}</span>`)
-
-// }
-
-// function collectCards(){
-//     transformGridArea(collapsedGridAreaTemplate)
-//     addCardsToGridAreaCell(cardCollectionCellClass)
-
-// }
-
-// function transformGridArea(areas)
-// {
-//     cardContainerElem.style.gridTemplateAreas = areas
-
-// }
-// function addCardsToGridAreaCell(cellPositionClassName)
-// {
-//     const cellPositionElem = document.querySelector(cellPositionClassName)
-
-//     cards.forEach((card, index) =>{
-//         addChildElement(cellPositionElem, card)
-//     })
-
-// }
-
-// function flipCard(card, flipToBack)
-// {
-//     const innerCardElem = card.firstChild
-
-//     if(flipToBack && !innerCardElem.classList.contains('flip-it'))
-//     {
-//         innerCardElem.classList.add('flip-it')
-//     }
-//     else if(innerCardElem.classList.contains('flip-it'))
-//     {
-//         innerCardElem.classList.remove('flip-it')
-//     }
-
-// }
-
-// function flipCards(flipToBack){
-//     cards.forEach((card,index)=>{
-//         setTimeout(() => {
-//             flipCard(card,flipToBack)
-//         },index * 100)
-//     })
-// }
-
-// function cardFlyInEffect()
-// {
-//     const id = setInterval(flyIn, 5)
-//     let cardCount = 0
-
-//     let count = 0
-
-//     function flyIn()
-//     {
-//         count++
-//         if(cardCount == numCards)
-//         {
-//             clearInterval(id)
-//             playGameButtonElem.style.display = "inline-block"            
-//         }
-//         if(count == 1 || count == 250 || count == 500 || count == 750)
-//         {
-//             cardCount++
-//             let card = document.getElementById(cardCount)
-//             card.classList.remove("fly-in")
-//         }
-//     }
-// }
-
-// function removeShuffleClasses()
-// {
-//     cards.forEach((card) =>{
-//         card.classList.remove("shuffle-left")
-//         card.classList.remove("shuffle-right")
-//     })
-// }
-// function animateShuffle(shuffleCount)
-// {
-//     const random1 = Math.floor(Math.random() * numCards) + 1
-//     const random2 = Math.floor(Math.random() * numCards) + 1
-
-//     let card1 = document.getElementById(random1)
-//     let card2 = document.getElementById(random2)
-
-//     if (shuffleCount % 4 == 0)
-//     {
-//         card1.classList.toggle("shuffle-left")
-//         card1.style.zIndex = 100
-//     }
-//     if (shuffleCount % 10 == 0)
-//     {
-//         card2.classList.toggle("shuffle-right")
-//         card2.style.zIndex = 200
-//     }
-
-// }
-
-// function shuffleCards()
-// {
-//     let shuffleCount = 0
-//     const id = setInterval(shuffle, 12)
-
-
-//     function shuffle()
-//     {
-//         randomizeCardPositions()
-       
-//         animateShuffle(shuffleCount)
-       
-//         if(shuffleCount == 500)
-//         {
-//             clearInterval(id)
-//             shufflingInProgress = false
-//             removeShuffleClasses()
-//             dealCards()
-//             updateStatusElement(currentGameStatusElem, "block", primaryColor, "Please click the card that you think is the Ace of Spades...")
-
-//         }
-//         else{
-//             shuffleCount++
-//         }
-
-//     }
-
-// }
-// function randomizeCardPositions()
-// {
-//     const random1 = Math.floor(Math.random() * numCards) + 1
-//     const random2 = Math.floor(Math.random() * numCards) + 1
-
-//     const temp = cardPositions[random1 - 1]
-
-//     cardPositions[random1 - 1] = cardPositions[random2 - 1]
-//     cardPositions[random2 - 1] = temp
-
-// }
-// function dealCards()
-// {
-//     addCardsToAppropriateCell()
-//     const areasTemplate = returnGridAreasMappedToCardPos()
-
-//     transformGridArea(areasTemplate)
-
-// }
-// function returnGridAreasMappedToCardPos()
-// {
-//     let firstPart = ""
-//     let secondPart = ""
-//     let areas = ""
-
-//     cards.forEach((card, index) => {
-//         if(cardPositions[index] == 1)
-//         {
-//             areas = areas + "a "
-//         }
-//         else if(cardPositions[index] == 2)
-//         {
-//             areas = areas + "b "
-//         }
-//         else if (cardPositions[index] == 3)
-//         {
-//             areas = areas + "c "
-//         }
-//         else if (cardPositions[index] == 4)
-//         {
-//             areas = areas + "d "
-//         }
-//         if (index == 1)
-//         {
-//             firstPart = areas.substring(0, areas.length - 1)
-//             areas = "";
-//         }
-//         else if (index == 3)
-//         {
-//             secondPart = areas.substring(0, areas.length - 1)
-//         }
-
-//     })
-
-//     return `"${firstPart}" "${secondPart}"`
-
-
-// }
-
-
-// function addCardsToAppropriateCell()
-// {
-//     cards.forEach((card)=>{
-//         addCardToGridCell(card)
-//     })
-// }
-
-
-
-// function createCards()
-// {
-//     cardObjectDefinitions.forEach((cardItem)=>{
-//         createCard(cardItem)
-//     })
-// }
-
-
-// function createCard(cardItem){
-
-//     //create div elements that make up a card
-//     const cardElem = createElement('div')
-//     const cardInnerElem = createElement('div')
-//     const cardFrontElem = createElement('div')
-//     const cardBackElem = createElement('div')
-
-//     //create front and back image elements for a card
-//     const cardFrontImg = createElement('img')
-//     const cardBackImg = createElement('img')
-
-//     //add class and id to card element
-//     addClassToElement(cardElem, 'card')
-//     addClassToElement(cardElem, 'fly-in')
-//     addIdToElement(cardElem, cardItem.id)
-
-//     //add class to inner card element
-//     addClassToElement(cardInnerElem, 'card-inner')
-    
-//     //add class to front card element
-//     addClassToElement(cardFrontElem, 'card-front')
-
-//     //add class to back card element
-//     addClassToElement(cardBackElem, 'card-back')
-
-//     //add src attribute and appropriate value to img element - back of card
-//     addSrcToImageElem(cardBackImg, cardBackImgPath)
-
-//     //add src attribute and appropriate value to img element - front of card
-//     addSrcToImageElem(cardFrontImg, cardItem.imagePath)
-
-//     //assign class to back image element of back of card
-//     addClassToElement(cardBackImg, 'card-img')
-   
-//     //assign class to front image element of front of card
-//     addClassToElement(cardFrontImg, 'card-img')
-
-//     //add front image element as child element to front card element
-//     addChildElement(cardFrontElem, cardFrontImg)
-
-//     //add back image element as child element to back card element
-//     addChildElement(cardBackElem, cardBackImg)
-
-//     //add front card element as child element to inner card element
-//     addChildElement(cardInnerElem, cardFrontElem)
-
-//     //add back card element as child element to inner card element
-//     addChildElement(cardInnerElem, cardBackElem)
-
-//     //add inner card element as child element to card element
-//     addChildElement(cardElem, cardInnerElem)
-
-//     //add card element as child element to appropriate grid cell
-//     addCardToGridCell(cardElem)
-
-//     initializeCardPositions(cardElem)
-
-//     attatchClickEventHandlerToCard(cardElem)
-
-
-// }
-// function attatchClickEventHandlerToCard(card){
-//     card.addEventListener('click', () => chooseCard(card))
-// }
-
-// function initializeCardPositions(card)
-// {
-//     cardPositions.push(card.id)
-// }
-
-// function createElement(elemType){
-//     return document.createElement(elemType)
-// }
-// function addClassToElement(elem, className){
-//     elem.classList.add(className)
-// }
-// function addIdToElement(elem, id){
-//     elem.id = id
-// }
-// function addSrcToImageElem(imgElem, src){
-//     imgElem.src = src
-// }
-// function addChildElement(parentElem, childElem){
-//     parentElem.appendChild(childElem)
-// }
-
-// function addCardToGridCell(card)
-// {
-//     const cardPositionClassName = mapCardIdToGridCell(card)
-
-//     const cardPosElem = document.querySelector(cardPositionClassName)
-
-//     addChildElement(cardPosElem, card)
-
-// }
-// function mapCardIdToGridCell(card){
-   
-//     if(card.id == 1)
-//     {
-//         return '.card-pos-a'
-//     }
-//     else if(card.id == 2)
-//     {
-//         return '.card-pos-b'
-//     }
-//     else if(card.id == 3)
-//     {
-//         return '.card-pos-c'
-//     }
-//     else if(card.id == 4)
-//     {
-//         return '.card-pos-d'
-//     }
-// }
-
-// //local storage functions
+function flipCard(cardElement) {
+    const cardInner = cardElement.querySelector('.card-inner');
+    cardInner.classList.toggle('flip');
+}
+
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+const buttonRadius = 30; // Radius for circular buttons
+
+// Calculate positions to center the buttons
+const canvasCenterX = canvas.width / 2;
+const canvasCenterY = canvas.height / 2;
+
+// Add the buttons to the buttons array
+const buttons = [
+    { text: 'Bet', x: canvasCenterX - 2.5 * buttonRadius - 60, y: canvasCenterY - buttonRadius },
+    { text: 'Deal', x: canvasCenterX - 1.5 * buttonRadius - 20, y: canvasCenterY - buttonRadius },
+    { text: 'Draw', x: canvasCenterX + 0.5 * buttonRadius + 20, y: canvasCenterY - buttonRadius },
+    { text: 'Reveal', x: canvasCenterX + 1.5 * buttonRadius + 60, y: canvasCenterY - buttonRadius }
+];
+
+// Initialize score, bet amount, and round
+let score = 1000; // Starting balance
+let betAmount = 5; // Default bet amount
+let wonAmount = 0; // Amount won in the current round
+let canPack = false; // Flag to track if "Pack" can be clicked
+let canDraw = true; // Flag to track if "Draw" can be clicked
+let canPack2 = false;
+
+// Update the balance and won display
+function updateDisplay() {
+    document.querySelector('.score .badge').textContent = score; // Update balance
+    document.querySelector('.round .badge').textContent = wonAmount; // Update won amount
+    document.querySelector('.bet .badge').textContent = betAmount; // Update bet amount
+}
+
+// Draw circular buttons and bet amount
+function drawButtons() {
+    buttons.forEach(button => {
+        // Draw circular button
+        ctx.beginPath();
+        ctx.arc(button.x + buttonRadius, button.y + buttonRadius, buttonRadius, 0, Math.PI * 2);
+        ctx.fillStyle = '#1A1A1A';
+        ctx.fill();
+        ctx.shadowColor = '#FFD700'; // Gold color
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.strokeStyle = '#FFD700'; // Gold border
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw button text
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(button.text, button.x + buttonRadius, button.y + buttonRadius);
+
+        // Reset shadow
+        ctx.shadowBlur = 0;
+    });
+}
+
+// Initial draw
+drawButtons();
+
+// Handle button clicks
+canvas.addEventListener('click', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    buttons.forEach(button => {
+        // Check if the click is inside the circular button
+        const dx = mouseX - (button.x + buttonRadius);
+        const dy = mouseY - (button.y + buttonRadius);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance <= buttonRadius) {
+            if (button.text === 'Draw') {
+                if (canDraw) {
+                    // Deduct bet amount from balance
+                    score -= betAmount;
+                    wonAmount = 0; // Reset won amount
+                    canPack = true; // Enable "Pack" button
+                    canDraw = false; // Disable "Draw" button
+                    canPack2 = false;
+                    updateDisplay(); // Update balance and won display
+                    shuffleCards(); // Shuffle the cards
+                } else {
+                    alert('You must click "Deal" before drawing again!');
+                }
+            } else if (button.text === 'Deal') {
+                let counter = 0;
+                cardPositions.forEach(card => {
+                    if (card.flipped = true) {
+                        counter++;
+                    }// Flip all cards
+                });
+                if (counter >= 5) {
+                    canPack2 = true;
+                }
+                if (canPack && canPack2) {
+                    // Calculate payout
+                    const payout = calculatePayout();
+                    wonAmount = payout; // Update won amount
+                    score += wonAmount; // Add won amount to balance
+                    canPack = false; // Disable "Pack" button
+                    canDraw = true;
+                    revealAllCards(); // Enable "Draw" button
+                    updateDisplay(); // Update balance and won display
+                } else {
+                    alert('You must click "Draw" and "Reveal" before packing!');
+                }
+            } else if (button.text === 'Reveal') {
+                canPack2 = true;
+                revealAllCards(); // Reveal all cards
+            } else if (button.text === 'Bet') {
+                // alert('Bet button clicked!');
+                document.getElementById('betSelector').style.display = 'flex';
+            }
+        }
+    });
+});
+
+document.getElementById('setBetButton').addEventListener('click', () => {
+    const selectedBet = parseInt(document.getElementById('betAmount').value);
+    if (selectedBet > 0 && selectedBet <= 10) {
+        betAmount = selectedBet; // Update the bet amount
+        alert(`Bet amount set to $${betAmount}`);
+        updateDisplay();
+        document.getElementById('betSelector').style.display = 'none'; // Hide the bet selector
+    } else {
+        alert('Invalid bet amount. Please select a value below 11.');
+    }
+});
+
+
+// Function to reveal all cards
+function revealAllCards() {
+    cardPositions.forEach(card => {
+        card.flipped = true; // Flip all cards
+    });
+    drawCards(); // Redraw the cards
+}
+
+const cardsCanvas = document.getElementById('cardsCanvas');
+const cardsCtx = cardsCanvas.getContext('2d');
+
+// Card dimensions
+const cardWidth = 100;
+const cardHeight = 150;
+
+// Card spacing and positioning
+const cardSpacing = 30; // Space between cards
+const totalWidth = (cardWidth * 5) + (cardSpacing * 4); // Total width of all cards and spaces
+const startX = (cardsCanvas.width - totalWidth) / 2; // Center the cards on the canvas
+
+// List of all card images in the folder with id, value, suit, and src
+const allCardImages = [
+    // Clubs
+    { id: 1, value: '2', suit: 'Clubs', src: '/images/clubs_2.png' },
+    { id: 2, value: '3', suit: 'Clubs', src: '/images/clubs_3.png' },
+    { id: 3, value: '4', suit: 'Clubs', src: '/images/clubs_4.png' },
+    { id: 4, value: '5', suit: 'Clubs', src: '/images/clubs_5.png' },
+    { id: 5, value: '6', suit: 'Clubs', src: '/images/clubs_6.png' },
+    { id: 6, value: '7', suit: 'Clubs', src: '/images/clubs_7.png' },
+    { id: 7, value: '8', suit: 'Clubs', src: '/images/clubs_8.png' },
+    { id: 8, value: '9', suit: 'Clubs', src: '/images/clubs_9.png' },
+    { id: 9, value: '10', suit: 'Clubs', src: '/images/clubs_10.png' },
+    { id: 10, value: '11', suit: 'Clubs', src: '/images/clubs_J.png' },
+    { id: 11, value: '12', suit: 'Clubs', src: '/images/clubs_Q.png' },
+    { id: 12, value: '13', suit: 'Clubs', src: '/images/clubs_K.png' },
+    { id: 13, value: '14', suit: 'Clubs', src: '/images/clubs_A.png' },
+
+    // Diamonds
+    { id: 14, value: '2', suit: 'Diamonds', src: '/images/diamonds_2.png' },
+    { id: 15, value: '3', suit: 'Diamonds', src: '/images/diamonds_3.png' },
+    { id: 16, value: '4', suit: 'Diamonds', src: '/images/diamonds_4.png' },
+    { id: 17, value: '5', suit: 'Diamonds', src: '/images/diamonds_5.png' },
+    { id: 18, value: '6', suit: 'Diamonds', src: '/images/diamonds_6.png' },
+    { id: 19, value: '7', suit: 'Diamonds', src: '/images/diamonds_7.png' },
+    { id: 20, value: '8', suit: 'Diamonds', src: '/images/diamonds_8.png' },
+    { id: 21, value: '9', suit: 'Diamonds', src: '/images/diamonds_9.png' },
+    { id: 22, value: '10', suit: 'Diamonds', src: '/images/diamonds_10.png' },
+    { id: 23, value: '11', suit: 'Diamonds', src: '/images/diamonds_J.png' },
+    { id: 24, value: '12', suit: 'Diamonds', src: '/images/diamonds_Q.png' },
+    { id: 25, value: '13', suit: 'Diamonds', src: '/images/diamonds_K.png' },
+    { id: 26, value: '14', suit: 'Diamonds', src: '/images/diamonds_A.png' },
+
+    // Hearts
+    { id: 27, value: '2', suit: 'Hearts', src: '/images/hearts_2.png' },
+    { id: 28, value: '3', suit: 'Hearts', src: '/images/hearts_3.png' },
+    { id: 29, value: '4', suit: 'Hearts', src: '/images/hearts_4.png' },
+    { id: 30, value: '5', suit: 'Hearts', src: '/images/hearts_5.png' },
+    { id: 31, value: '6', suit: 'Hearts', src: '/images/hearts_6.png' },
+    { id: 32, value: '7', suit: 'Hearts', src: '/images/hearts_7.png' },
+    { id: 33, value: '8', suit: 'Hearts', src: '/images/hearts_8.png' },
+    { id: 34, value: '9', suit: 'Hearts', src: '/images/hearts_9.png' },
+    { id: 35, value: '10', suit: 'Hearts', src: '/images/hearts_10.png' },
+    { id: 36, value: '11', suit: 'Hearts', src: '/images/hearts_J.png' },
+    { id: 37, value: '12', suit: 'Hearts', src: '/images/hearts_Q.png' },
+    { id: 38, value: '13', suit: 'Hearts', src: '/images/hearts_K.png' },
+    { id: 39, value: '14', suit: 'Hearts', src: '/images/hearts_A.png' },
+
+    // Spades
+    { id: 40, value: '2', suit: 'Spades', src: '/images/spades_2.png' },
+    { id: 41, value: '3', suit: 'Spades', src: '/images/spades_3.png' },
+    { id: 42, value: '4', suit: 'Spades', src: '/images/spades_4.png' },
+    { id: 43, value: '5', suit: 'Spades', src: '/images/spades_5.png' },
+    { id: 44, value: '6', suit: 'Spades', src: '/images/spades_6.png' },
+    { id: 45, value: '7', suit: 'Spades', src: '/images/spades_7.png' },
+    { id: 46, value: '8', suit: 'Spades', src: '/images/spades_8.png' },
+    { id: 47, value: '9', suit: 'Spades', src: '/images/spades_9.png' },
+    { id: 48, value: '10', suit: 'Spades', src: '/images/spades_10.png' },
+    { id: 49, value: '11', suit: 'Spades', src: '/images/spades_J.png' },
+    { id: 50, value: '12', suit: 'Spades', src: '/images/spades_Q.png' },
+    { id: 51, value: '13', suit: 'Spades', src: '/images/spades_K.png' },
+    { id: 52, value: '14', suit: 'Spades', src: '/images/spades_A.png' }
+];
+
+// Shuffle the array and pick 6 random cards
+function getRandomCards() {
+    const shuffled = [...allCardImages].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 5);
+}
+
+// Generate card positions with random cards
+function generateCardPositions() {
+    const randomCards = getRandomCards();
+    return randomCards.map((card, index) => ({
+        id: card.id,
+        value: card.value,
+        suit: card.suit,
+        x: startX + index * (cardWidth + cardSpacing),
+        y: (cardsCanvas.height - cardHeight) / 2, // Center vertically
+        front: card.src,
+        back: '/images/back_light.png',
+        flipped: false,
+        disabled: false // Add a disabled property
+    }));
+}
+
+// Initialize card positions
+let cardPositions = generateCardPositions();
+
+// Load images
+function loadImage(src) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.src = src;
+    });
+}
+
+// Draw bet amount in the center of the buttons
+cardsCtx.fillStyle = '#FFD700'; // Gold color
+cardsCtx.font = '20px Arial';
+cardsCtx.textAlign = 'center';
+cardsCtx.textBaseline = 'middle';
+cardsCtx.fillText(`Bet: $${betAmount}`, canvasCenterX, canvasCenterY); // Position below buttons
+// Draw a single card with a box shadow
+async function drawCard(card) {
+    const img = await loadImage(card.flipped ? card.front : card.back);
+
+    // Add box shadow effect
+    cardsCtx.save();
+    cardsCtx.shadowColor = 'rgba(255, 255, 255, 0.5)'; // Shadow color
+    cardsCtx.shadowBlur = 10; // Blur radius
+    cardsCtx.shadowOffsetX = 5; // Horizontal offset
+    cardsCtx.shadowOffsetY = 5; // Vertical offset
+
+    // Draw the card
+    cardsCtx.drawImage(img, card.x, card.y, cardWidth, cardHeight);
+
+    // Restore canvas state
+    cardsCtx.restore();
+}
+
+// Draw all cards
+async function drawCards() {
+    cardsCtx.clearRect(0, 0, cardsCanvas.width, cardsCanvas.height);
+    for (const card of cardPositions) {
+        await drawCard(card);
+    }
+}
+
+// Check if a card is clicked
+cardsCanvas.addEventListener('click', (event) => {
+    const rect = cardsCanvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    cardPositions.forEach((card) => {
+        if (
+            !card.disabled && // Ignore disabled cards
+            mouseX >= card.x &&
+            mouseX <= card.x + cardWidth &&
+            mouseY >= card.y &&
+            mouseY <= card.y + cardHeight
+        ) {
+            card.flipped = !card.flipped; // Flip the card
+            checkForDuplicateValues(); // Check for duplicates after flipping
+            drawCards(); // Redraw the cards
+        }
+    });
+});
+
+// Check for duplicate card values and disable them
+let payout = 0;
+let suitsArray = [];
+let valuesArray = [];
+function checkForDuplicateValues() {
+    const valueCounts = {};
+    cardPositions.forEach(card => {
+        if (card.flipped) {
+            valueCounts[card.value] = (valueCounts[card.value] || 0) + 1;
+        }
+    });
+
+    cardPositions.forEach(card => {
+        if (card.flipped && valueCounts[card.value] > 1) {
+            card.disabled = true; // Disable cards with duplicate values
+            suitsArray.push(card.suit)
+            valuesArray.push(card.value)
+        } else {
+            card.disabled = false; // Enable cards without duplicates
+        }
+    });
+}
+
+// Shuffle the card positions and display them as per the new sequence
+function shuffleCards() {
+    // Reset all cards to show their back and enable them
+    cardPositions.forEach(card => {
+        card.flipped = false;
+        card.disabled = false;
+    });
+
+    // Generate new random card positions
+    cardPositions = generateCardPositions();
+
+    // Redraw the shuffled cards
+    drawCards();
+}
+
+// Initial draw
+drawCards();
+
+function calculatePayout() {
+
+    const flippedCards = cardPositions.filter(card => card.flipped);
+    // const flippedCards = [
+    //     { id: 9, value: '10', suit: 'Clubs', src: '/images/clubs_10.png' },
+    //     { id: 10, value: '11', suit: 'Clubs', src: '/images/clubs_J.png' },
+    //     { id: 11, value: '12', suit: 'Clubs', src: '/images/clubs_Q.png' },
+    //     { id: 12, value: '13', suit: 'Clubs', src: '/images/clubs_K.png' },
+    //     { id: 13, value: '14', suit: 'Clubs', src: '/images/clubs_A.png' },
+    // ]
+    const suits = flippedCards.map(card => card.suit);
+    const values = flippedCards.map(card => parseInt(card.value)); // Convert values to integers
+
+    // Sort values for sequence checks
+    const sortedValues = [...values].sort((a, b) => a - b);
+
+    // Helper functions
+    const isSameSuit = suits.every(suit => suit === suits[0]);
+    const isSequence = sortedValues.every((val, i, arr) => i === 0 || val === arr[i - 1] + 1);
+    const valueCounts = values.reduce((counts, val) => {
+        counts[val] = (counts[val] || 0) + 1;
+        return counts;
+    }, {});
+
+    const counts = Object.values(valueCounts);
+    const maxCount = Math.max(...counts);
+
+    let payout = 0;
+
+    // Check for Royal Flush
+    if (isSameSuit && sortedValues.every(val => val >= 10)) {
+        payout = 4000 / 5 * betAmount;
+    }
+    // Check for Straight Flush
+    else if (isSameSuit && isSequence && sortedValues[0] < 10) {
+        payout = 250 / 5 * betAmount;
+    }
+    // Check for Four of a Kind (Aces)
+    else if (maxCount === 4 && values.includes(14)) {
+        payout = 400 / 5 * betAmount;
+    }
+    // Check for Four of a Kind
+    else if (maxCount === 4) {
+        payout = (Math.max(...values) * 4) / 5 * betAmount;
+    }
+    // Check for Full House
+    else if (counts.includes(3) && counts.includes(2) && Math.min(...values) > 10) {
+        payout = 125 / 5 * betAmount;
+    }
+    // Check for Flush
+    else if (isSameSuit) {
+        payout = 40 / 5 * betAmount;
+    }
+    // Check for Straight
+    else if (isSequence) {
+        payout = 20 / 5 * betAmount;
+    }
+    // Check for Three of a Kind
+    else if (maxCount === 3) {
+        payout = 15 / 5 * betAmount;
+    }
+    // Check for Two Pair
+    else if (counts.filter(count => count === 2).length === 2) {
+        payout = 10 / 5 * betAmount;
+    }
+    // Check for Jack or Better
+    else if (values.some(val => val > 10)) {
+        payout = 5 / 5 * betAmount;
+    } else {
+        payout = 0 / 5 * betAmount;
+    }
+
+    return payout;
+}
+
+//local storage functions
 // function getSerializedObjectAsJSON(obj)
 // {
 //     return JSON.stringify(obj)
@@ -614,12 +456,3 @@
 //     updateGameObject(score, round)
 //     updateLocalStorageItem(localStorageGameKey, getSerializedObjectAsJSON(gameObj))
 // }
-
-
-const cardInfo=[
-    {id:1,imagePath:"images/card-AceSpades.png"},
-    {id:2,imagePath:"images/card-JackClubs.png"},
-    {id:3,imagePath:"images/card-KingHearts.png"},
-    {id:4,imagePath:"images/card-QueenDiamonds.png"},
-]
-

@@ -21,96 +21,259 @@
 
 }
 
-
+/* General styles */
 body {
-    display: grid;
-    grid-row: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
     color: #FFFFFF;
     background-color: #000;
-    /* background-color: rgba(36, 15, 228, 0.8); */
-    /* background-image: url("./images/bg12.jpg");
-    background-repeat: no-repeat;
-    background-size: 100%; */
+    margin: 0;
+    padding: 0;
 }
 
 header {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-bottom: 10px;
     font: 1em var(--primary-font);
+    text-align: center;
 }
 
 .header-title-container {
-    width: 40%;
-    margin-left: 250px;
-    font-size: large;
+    width: 100%;
+    font-size: 1.5em;
     color: rgb(236, 226, 41);
     font-family: var(--primary-font);
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     animation: pulsate 2s infinite;
 }
 
-.header-round-info-container {
-    display: flex;
-    justify-content: space-evenly;
-}
-
 .header-img {
-    height: 75px;
+    height: 50px;
     border-radius: 5px;
     border: 1px solid rgb(255, 255, 255);
     padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
     transform: rotate(-3deg);
+    margin-right: 10px;
 }
 
-.header-status-info-container {
+.header-round-info-container {
     display: flex;
-    justify-content: center;
-}
-
-.header-button-container,
-.header-score-container,
-.header-round-container,
-.header-img-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#playGame {
-    appearance: none;
-    background-color: transparent;
-    border: 2px solid #1A1A1A;
-    border-radius: 15px;
-    box-sizing: border-box;
-    color: #3B3B3B;
-    cursor: pointer;
-    /* display: none; */
-    font-family: var(--primary-font);
-    font-size: 16px;
-    font-weight: 600;
-    line-height: normal;
-    margin: 0;
-    min-height: 60px;
-    min-width: 0;
-    outline: none;
-    padding: 16px 24px;
-    text-align: center;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+    justify-content: space-around;
     width: 100%;
-    will-change: transform;
-    animation: game-play-button-fade-in 2s infinite;
+    margin-top: 10px;
+    flex-wrap: wrap;
 }
 
+.header-round-container {
+    margin: 5px;
+    text-align: center;
+}
+
+.header-score-container h2{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FFD700; /* Gold color for text */
+    background-color: #1A1A1A; /* Dark background */
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 2px solid #FFD700; /* Gold border */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Glowing effect */
+    text-align: center;
+    margin: 5px;
+    display: inline-block;
+}
+.header-round-container h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FFD700; /* Gold color for text */
+    background-color: #1A1A1A; /* Dark background */
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 2px solid #FFD700; /* Gold border */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Glowing effect */
+    text-align: center;
+    margin: 5px;
+    display: inline-block;
+}
+
+.header-round-container h2 .badge {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FFFFFF; /* White color for badge text */
+    background-color: #444; /* Dark gray background for badge */
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+canvas {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #fcfcfc;
+}
+
+#betSelector {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+#betSelector label {
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+#betSelector select {
+    font-size: 1em;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+button {
+    appearance: none;
+    background-color: #1A1A1A;
+    border: 2px solid #FFD700;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #FFD700;
+    transition: all 0.3s ease-in-out;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #FFD700;
+    color: #1A1A1A;
+    box-shadow: 0 0 20px #FFD700;
+}
+
+/* Card styles */
+.cards {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: var(--card-width-sm);
+    height: var(--card-height-sm);
+    margin: 5px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.card-inner.flip {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    transform: rotateY(180deg);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .header-title-container {
+        font-size: 1.2em;
+        flex-direction: column;
+    }
+
+    .header-img {
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .header-round-info-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    canvas {
+        width: 90%;
+        height: auto;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    #betSelector {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #betSelector label,
+    #betSelector select {
+        margin-bottom: 10px;
+    }
+
+    .card {
+        width: calc(var(--card-width-sm) * 0.8);
+        height: calc(var(--card-height-sm) * 0.8);
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title-container {
+        font-size: 1em;
+    }
+
+    .header-img {
+        height: 30px;
+    }
+
+    .header-round-info-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .card {
+        width: calc(var(--card-width-sm) * 0.6);
+        height: calc(var(--card-height-sm) * 0.6);
+    }
+}
 
 @keyframes game-play-button-fade-in {
     0% {
@@ -133,118 +296,10 @@ header {
     }
 
     50% {
-        /* transform: scale(1.2); */
         opacity: 1;
-        /* box-shadow: 0 4px 8px 0; */
     }
 
     100% {
-        /* transform: scale(1); */
         opacity: 0.5;
     }
-}
-
-main {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 70px;
-    width: 100%;
-    height: 180px;
-}
-
-
-
-.cards {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 5px;
-    width: 100%;
-    height: 100%;
-    border: 2px solid black;
-}
-
-.card {
-    position: relative;
-    padding: 3px;
-    width: 100px;
-    /* Adjust card width as needed */
-    height: 150px;
-    /* Adjust card height as needed */
-    perspective: 1000px;
-    cursor: pointer;
-}
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-}
-
-.card-inner.flip {
-    transform: rotateY(180deg);
-}
-
-.card-front,
-.card-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-}
-
-.card-front img,
-.card-back img {
-    width: 100%;
-    /* Make the image fit the card width */
-    height: 100%;
-    /* Make the image fit the card height */
-    object-fit: cover;
-    /* Ensure the image scales properly without distortion */
-}
-
-.card-front {
-    transform: rotateY(180deg);
-}
-
-canvas {
-    display: block;
-    margin: 0 auto;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 1px solid #fcfcfc;
-}
-
-button {
-    appearance: none;
-    background-color: #1A1A1A;
-    border: 2px solid #FFD700;
-    /* Gold border */
-    border-radius: 10px;
-    color: #FFFFFF;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #FFD700;
-    /* Glowing effect */
-    transition: all 0.3s ease-in-out;
-}
-
-button:hover {
-    background-color: #FFD700;
-    /* Gold background on hover */
-    color: #1A1A1A;
-    /* Dark text on hover */
-    box-shadow: 0 0 20px #FFD700;
-    /* Stronger glow on hover */
-}
-
-#betSelector{
-    justify-content: space-evenly;
 }
