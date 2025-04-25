@@ -16,12 +16,11 @@
             </div>
             <h1>POKER HUB</h1>
         </div>
-        <!-- <div class="header-button-container">
-            <div class="game-play-button-container">
-                <button id="playGame" class="play-game">Play Game</button>
-            </div>
-        </div> -->
     </header>
+    <!-- Payout Button -->
+    <button id="payoutButton" class="payout-button">Payout</button>
+
+    <!-- Popup for Payout Image -->
     <canvas id="cardsCanvas" width="800" height="250" style="border:1px solid #000;"></canvas>
     <div class="header-round-info-container">
         <div class="header-score-container">
@@ -34,6 +33,7 @@
             <h2 class="bet">Bet&nbsp;<span class="badge">$5</span></h2>
         </div>
     </div>
+
     <!-- Dropdown for selecting bet amount -->
     <div id="betSelector" style="display: none; text-align: center; margin-top: 10px;">
         <label for="betAmount">Select Bet Amount:</label>
@@ -51,7 +51,30 @@
         </select>
         <button id="setBetButton">Set Bet</button>
     </div>
+
     <canvas id="gameCanvas" width="700" height="100" style="border:1px solid #000;"></canvas>
+
+    
+    <div id="payoutPopup" class="payout-popup">
+        <span id="closePopup" class="close-popup">&times;</span>
+        <div class="popup-content">
+            <img src="./PayoutsImage.png" alt="Payouts" class="payout-image">
+        </div>
+        <div class="popup-content" id="maths">
+            <span><b>Default Bet = $5</b><br><br>
+                Royal flush = $4000 <br><br>
+                four of a kind (aces)= $400<br><br>
+                straight flush = =$250<br><br>
+                four of a kind = $200<br><br>
+                full house = $125<br><br>
+                flush = $40<br><br>
+                straight = $20<br><br>
+                three of a kind = $15<br><br>
+                two pair = $10<br><br>
+                jack or better = $5<br></span>
+        </div>
+    </div>
+    
 
     <script src="index.js"></script>
 </body>

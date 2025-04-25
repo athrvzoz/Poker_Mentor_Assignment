@@ -425,34 +425,57 @@ function calculatePayout() {
 }
 
 //local storage functions
-// function getSerializedObjectAsJSON(obj)
-// {
-//     return JSON.stringify(obj)
-// }
-// function getObjectFromJSON(json)
-// {
-//     return JSON.parse(json)
-// }
-// function updateLocalStorageItem(key, value)
-// {
-//     localStorage.setItem(key, value)
-// }
-// function removeLocalStorageItem(key)
-// {
-//     localStorage.removeItem(key)
-// }
-// function getLocalStorageItemValue(key)
-// {
-//     return localStorage.getItem(key)
-// }
+function getSerializedObjectAsJSON(obj)
+{
+    return JSON.stringify(obj)
+}
+function getObjectFromJSON(json)
+{
+    return JSON.parse(json)
+}
+function updateLocalStorageItem(key, value)
+{
+    localStorage.setItem(key, value)
+}
+function removeLocalStorageItem(key)
+{
+    localStorage.removeItem(key)
+}
+function getLocalStorageItemValue(key)
+{
+    return localStorage.getItem(key)
+}
 
-// function updateGameObject(score,round)
-// {
-//     gameObj.score = score
-//     gameObj.round = round
-// }
-// function saveGameObjectToLocalStorage(score,round)
-// {
-//     updateGameObject(score, round)
-//     updateLocalStorageItem(localStorageGameKey, getSerializedObjectAsJSON(gameObj))
-// }
+function updateGameObject(score,round)
+{
+    gameObj.score = score
+    gameObj.round = round
+}
+function saveGameObjectToLocalStorage(score,round)
+{
+    updateGameObject(score, round)
+    updateLocalStorageItem(localStorageGameKey, getSerializedObjectAsJSON(gameObj))
+}
+
+// Get references to the popup and close button
+const payoutButton = document.getElementById('payoutButton');
+const payoutPopup = document.getElementById('payoutPopup');
+const closePopup = document.getElementById('closePopup');
+
+// Show the popup when the "Payout" button is clicked
+payoutButton.addEventListener('click', () => {
+    payoutPopup.style.display = 'flex';
+    payoutPopup.style.justifyContent = 'space-between';
+});
+
+// Hide the popup when the close button is clicked
+closePopup.addEventListener('click', () => {
+    payoutPopup.style.display = 'none';
+});
+
+// Hide the popup when clicking outside the popup content
+window.addEventListener('click', (event) => {
+    if (event.target === payoutPopup) {
+        payoutPopup.style.display = 'none';
+    }
+});
